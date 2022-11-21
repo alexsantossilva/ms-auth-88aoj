@@ -19,6 +19,26 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: alexsantossilva/88aoj-postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: "ubuntu"
+          POSTGRES_DB: "auth"
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -27,5 +47,13 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: Setting environment
+      env:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/auth
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: ubuntu
+        SPRING_JPA_HIBERNATE_DDL_AUTO: update
     - name: Build with Maven
       run: mvn package
+
+

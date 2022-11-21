@@ -47,12 +47,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Setting environment
-      env:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/auth
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: ubuntu
-        SPRING_JPA_HIBERNATE_DDL_AUTO: update
     - name: Build with Maven
       run: mvn package
 

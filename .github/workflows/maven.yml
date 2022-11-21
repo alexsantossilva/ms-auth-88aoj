@@ -69,4 +69,4 @@ jobs:
       with:
         context: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/ms-auth-spring:${{ steps.buildnumber.outputs.build_number }}
+        tags: alexsantossilva/ms-auth-spring:${{ steps.buildnumber.outputs.build_number }}
